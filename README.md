@@ -21,5 +21,13 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 此处进行更新
+```
+进行一次测试提交
+```
+> 服务端api提供数据接口 8081
+   页面服务端口 8082
+
+当前保存横向柱状图显示正常
+
+
