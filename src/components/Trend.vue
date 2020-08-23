@@ -3,7 +3,7 @@
   <div class="com-container">
     <div class="title" :style="comStyle">
       <span>{{ '▎ ' +  showTitle }}</span>
-      <span class="iconfont title-icon" @click="showChoice = !showChoice">&#xe6eb;</span>
+      <span class="iconfont title-icon" @click="showChoice = !showChoice" :style="marginStyle">&#xe6eb;</span>
       <div class="select-con" v-show="showChoice" :style="marginStyle">
         <div class="select-item" v-for="item in selectTypes" :key="item.key" @click="handleSelect(item.key)">
           {{ item.text }}
@@ -164,7 +164,7 @@ export default {
       this.chartInstance.setOption(dataOption)
     },
     screenAdapter () {
-      this.titleFontSize = this.$refs.trend_ref.offsetWidth / 100 * 3.6
+      this.titleFontSize = this.$refs.trend_ref.offsetWidth / 150 * 3.6
 
       const adapterOption = {
         legend: {

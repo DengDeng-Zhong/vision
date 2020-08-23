@@ -34,7 +34,7 @@ export default {
       // 对图表初始化配置的控制
       const initOption = {
         title: {
-          text: '▎商家销售统计',
+          text: '▎未关闭事件单',
           textStyle: {
             fontSize: 66
           },
@@ -118,15 +118,15 @@ export default {
       })
       console.log(ret)
 
-      this.totalPage = this.allData.length % 5 === 0 ? this.allData.length / 5 : this.allData.length / 5 + 1
+      this.totalPage = this.allData.length % 15 === 0 ? this.allData.length / 15 : this.allData.length / 15 + 1
       this.updateChart()
       // 启动定时器
       this.startInterval()
     },
     // 更新图表
     updateChart () {
-      const start = (this.currentPage - 1) * 5
-      const end = this.currentPage * 5
+      const start = (this.currentPage - 1) * 15
+      const end = this.currentPage * 15
       const showData = this.allData.slice(start, end)
       const sellerNames = showData.map((item) => {
         return item.name
@@ -148,6 +148,7 @@ export default {
     },
     // 定时器,5秒加载一次数据
     startInterval () {
+      console.log('startInterval')
       // 为保险起见,启动定时器时先判断是否已经存在定时器,如果有则先关闭原来的
       if (this.timerId) {
         clearInterval(this.timerId)
@@ -166,7 +167,7 @@ export default {
     screenAdapter () {
       // 通过获取当前图表div的状态变化情况来识别分辨率
       // console.log(this.$refs.seller_ref.offsetWidth)
-      const titleFontSize = this.$refs.seller_ref.offsetWidth / 100 * 3.6
+      const titleFontSize = this.$refs.seller_ref.offsetWidth / 150 * 3.6
       const adapterOption = {
         title: {
           textStyle: {
