@@ -79,7 +79,15 @@ export default {
           containLable: true
         },
         tooltip: {
-          trigger: 'axis'
+          trigger: 'axis',
+          axisPointer: {
+              type: 'cross',
+              snap: true,
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+
         },
         legend: {
           left: 20,
