@@ -13,20 +13,20 @@ export default {
     return {
       chartInstance: null,
       allData: null, // 从服务器中获取的所有数据
-      currentIndex: 0,
+      currentIndex: 0, // 当前所展示出的一级分类数据
       titleFontSize: 0
     }
   },
   computed: { // 计算属性
     catName (){
-      if(!this.allData){
+      if (!this.allData) {
         return ''
-      }else{
+      } else {
         return this.allData[this.currentIndex].name
       }
     },
     comStyle () {
-      return{
+      return {
         fontSize: this.titleFontSize + 'px'
       }
     }
@@ -38,11 +38,11 @@ export default {
     this.screenAdapter() // 第一次加载 自适应文字
   },
   destroyed () {
-    window.removeEventListener('resize',this.screenAdapter)
+    window.removeEventListener('resize', this.screenAdapter)
   },
   methods: {
     initChart () {
-      this.chartInstance =  this.$echarts.init(this.$refs.hot_ref,'chalk')
+      this.chartInstance = this.$echarts.init(this.$refs.hot_ref, 'chalk')
       const initOption = {
         title: {
           text: '▎饼状图表展示',
@@ -50,26 +50,24 @@ export default {
           top: 20
         },
         legend: {
-          top: '5%',
+          top: '15%',
           icon: 'circle'
         },
         tooltip: {
           show: true,
           formatter: (arg) => {
-            //console.log(arg)
+            // console.log(arg)
             const thirdCategory = arg.data.children
-            
             // 计算出所有三级分类的数值总和
             let total = 0
             thirdCategory.forEach(item => {
               total += item.value
-              // console.log(total)
             })
             let retStr = ''
             thirdCategory.forEach(item => {
               retStr += `
               ${item.name}: ${parseInt(item.value / total * 100) + '%'}
-              <br>`
+              <br/>`
             })
             return retStr
           }
@@ -89,23 +87,23 @@ export default {
                 show: true
               },
               labelLine: {
-                show: true  // 饼状图指引线
+                show: false // 饼状图指引线
               }
             }
           }
         ]
       }
       this.chartInstance.setOption(initOption)
-      },
+    },
     async getData () {
-      // 获取服务器的数据,对this.allData进行赋值之后,调用updateChart方法更新图表
+      // 获取服务器的数据, 对this.allData进行赋值之后, 调用updateChart方法更新图表
       const { data: ret } = await this.$http.get('hot') // 通过结构赋值,获取到数据
       this.allData = ret
-      console.log(ret)
+      console.log(this.allData)
       this.updateChart()
-     
     },
     updateChart () {
+      // 处理图表需要的数据
       const legendData = this.allData[this.currentIndex].children.map(item => {
         return item.name
       })
@@ -113,7 +111,7 @@ export default {
         return {
           name: item.name,
           value: item.value,
-          children: item.children
+          children: item.children // 新增加children的原因是为了在tooltip中的formatter的回调函数中,来拿到这个二级分类下的三级分类数据
         }
       })
       const dataOption = {
@@ -122,28 +120,31 @@ export default {
         },
         series: [
           {
-            data: seriesData,
-            emphasis: {
-              label: {
-              }
-            }
+            data: seriesData
           }
         ]
       }
       this.chartInstance.setOption(dataOption)
     },
     screenAdapter () {
-      this.titleFontSize = this.$refs.hot_ref.offsetWidth / 150 * 3.6
-      // console.log(titleFontSize)
+      this.titleFontSize = this.$refs.hot_ref.offsetWidth / 100 * 3.6
       const adapterOption = {
         title: {
           textStyle: {
             fontSize: this.titleFontSize
           }
         },
+        legend: {
+          itemWidth: this.titleFontSize / 2,
+          itemHeight: this.titleFontSize / 2,
+          itemGap: this.titleFontSize / 2,
+          textStyle: {
+            fontSize: this.titleFontSize / 2
+          }
+        },
         series: [
           {
-            radius: this.titleFontSize * 4.5
+            radius: this.titleFontSize * 4.5,
           }
         ]
       }
@@ -152,14 +153,14 @@ export default {
     },
     toLeft () {
       this.currentIndex--
-      if(this.currentIndex < 0){
-        this.currentIndex = this.allData.length -1
+      if (this.currentIndex < 0) {
+        this.currentIndex = this.allData.length - 1
       }
       this.updateChart()
     },
     toRight () {
       this.currentIndex++
-      if(this.currentIndex > this.allData.length -1){
+      if (this.currentIndex > this.allData.length - 1) {
         this.currentIndex = 0
       }
       this.updateChart()
@@ -169,26 +170,27 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.arr-left{
-  position: absolute;
+.arr-left {
+  position:absolute;
   left: 10%;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer; // 鼠标一上去显示小手
   color: white;
 }
-.arr-right{
-  position: absolute;
+.arr-right {
+  position:absolute;
   right: 10%;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
   color: white;
 }
-.cat-name{
-  position: absolute;
+.cat-name {
+  position:absolute;
   left: 80%;
-  bottom: 80px;
+  bottom: 20px;
   color: white;
 }
 </style>
+

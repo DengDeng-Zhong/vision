@@ -72,7 +72,6 @@ export default {
       const seriesArr = showData.map((item, index) => {
         return {
           type: 'pie',
-          radius: [110, 100],
           center: centerArr[index],
           hoverAnimation: false, // 关闭鼠标移入到饼图时的动画效果
           labelLine: {

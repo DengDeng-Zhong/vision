@@ -7,10 +7,19 @@ import RankPage from '../views/RankPage.vue'
 import DemoPage from '../views/DemoPage.vue'
 import HotPage from '../views/HotPage.vue'
 import RoundPage from '../views/RoundPage.vue'
+import ScreenPage from '../views/ScreenPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    redirect: '/screen'
+  },
+  {
+    path: '/screen',
+    component: ScreenPage
+  },
   {
     path: '/sellerpage',
     component: SellerPage
