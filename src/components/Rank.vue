@@ -28,10 +28,10 @@ export default {
   },
   methods: {
     initChart () {
-      this.chartInstance =  this.$echarts.init(this.$refs.rank_ref)
+      this.chartInstance =  this.$echarts.init(this.$refs.rank_ref, 'chalk')
       const initOption = {
         title: {
-          text: '▎报单系统排行(已关闭/未关闭堆叠)',
+          text: '▎报单系统排行(已关闭/未关闭堆叠图)',
           left: 20,
           top: 20
         },
@@ -52,7 +52,18 @@ export default {
           type: 'value'
         },
         series: {
-          type: 'bar'
+          type: 'bar',
+          itemStyle: {
+              normal: {
+								label: {
+									show: true, //开启显示
+									position: 'top', //在上方显示
+									textStyle: { //数值样式
+                    color: '#1E90FF'
+									}
+								}
+							}
+          }
         }
       }
       this.chartInstance.setOption(initOption)
@@ -140,7 +151,8 @@ export default {
           {
             barWidth: titleFontSize,
             itemStyle: {
-              barBorderRadius: [titleFontSize / 2, titleFontSize / 2, 0, 0]
+              barBorderRadius: [titleFontSize / 2, titleFontSize / 2, 0, 0],
+              fontsize: titleFontSize
             }
           }
         ]
