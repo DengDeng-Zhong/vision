@@ -6,6 +6,7 @@ import MapPage from '../views/MapPage.vue'
 import RankPage from '../views/RankPage.vue'
 import DemoPage from '../views/DemoPage.vue'
 import HotPage from '../views/HotPage.vue'
+import RoundPage from '../views/RoundPage.vue'
 
 Vue.use(VueRouter)
 
@@ -33,6 +34,10 @@ const routes = [
   {
     path: '/hotpage',
     component: HotPage
+  },
+  {
+    path: '/roundpage',
+    component: RoundPage
   }
 ]
 
